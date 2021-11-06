@@ -157,7 +157,7 @@ public class Login extends javax.swing.JFrame {
                     {
                         JOptionPane.showMessageDialog(null,"Acesso concedido como: "+ cargo); //caso login e senha estiverem errados exibe mensagem
                            
-                        if ("usuario".equals(cargo))
+                        if ("Usuario".equals(cargo))
                         {
                             Tela_Funcionario.setVisible(true); //Torna a tela Principal visÃƒÂ­vel
                             this.dispose();// faz com que a tela de login desapareÃƒÂ§a apÃƒÂ³s abrir tela principal 
