@@ -53,6 +53,8 @@ public class Gerenciar_Funcionarios extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_Usuarios = new javax.swing.JTable();
+        btn_alterarFuncionario = new javax.swing.JButton();
+        btn_removerFuncionario = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -147,6 +149,27 @@ public class Gerenciar_Funcionarios extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tbl_Usuarios);
 
+        btn_alterarFuncionario.setBackground(new java.awt.Color(0, 153, 0));
+        btn_alterarFuncionario.setFont(new java.awt.Font("Arial Black", 0, 14)); // NOI18N
+        btn_alterarFuncionario.setText("ALTERAR");
+        btn_alterarFuncionario.setBorderPainted(false);
+        btn_alterarFuncionario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_alterarFuncionarioActionPerformed(evt);
+            }
+        });
+
+        btn_removerFuncionario.setBackground(new java.awt.Color(153, 0, 51));
+        btn_removerFuncionario.setFont(new java.awt.Font("Arial Black", 0, 14)); // NOI18N
+        btn_removerFuncionario.setForeground(new java.awt.Color(255, 255, 255));
+        btn_removerFuncionario.setText("EXCLUIR");
+        btn_removerFuncionario.setBorderPainted(false);
+        btn_removerFuncionario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_removerFuncionarioActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -169,7 +192,12 @@ public class Gerenciar_Funcionarios extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 494, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 494, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(btn_alterarFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_removerFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -193,7 +221,10 @@ public class Gerenciar_Funcionarios extends javax.swing.JFrame {
                         .addComponent(cmbBox_cargo, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addComponent(btn_cadastrarFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_cadastrarFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_alterarFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_removerFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(184, Short.MAX_VALUE))
         );
 
@@ -327,6 +358,30 @@ public class Gerenciar_Funcionarios extends javax.swing.JFrame {
          }
     }//GEN-LAST:event_tbl_UsuariosMouseClicked
 
+    private void btn_alterarFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_alterarFuncionarioActionPerformed
+        Usuario_BD Funcionario = new Usuario_BD();
+        if (Funcionario.atualizarFuncionario(getDados_Funcionario())) {
+            JOptionPane.showMessageDialog(this,"Atualizado com sucesso!", "Manutenção",1);
+        } else {
+            JOptionPane.showMessageDialog(this, "Atualização não realizada!", "Manutenção", 0);
+        }
+        this.inicializaCampos_tabela();
+    }//GEN-LAST:event_btn_alterarFuncionarioActionPerformed
+
+    private void btn_removerFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_removerFuncionarioActionPerformed
+        Usuario_BD Funcionario = new Usuario_BD();
+        if (JOptionPane.showConfirmDialog(rootPane, "Confirma exclusão?", "Confirmação de exlusão", 1, 1)==0){
+            if (Funcionario.excluirFuncionario(this.getDados_Funcionario())){
+                JOptionPane.showMessageDialog(this,"Excluido com sucesso!", "Manutenção",1);
+            }else {
+                JOptionPane.showMessageDialog(this, "Exclusão não realizada!", "Manutenção", 0);
+            }
+            this.inicializaCampos_tabela(); 
+        } else {
+            JOptionPane.showMessageDialog(this, "Exclusão cancelada pelo usuário!", "Manutenção", 0);
+        }
+    }//GEN-LAST:event_btn_removerFuncionarioActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -370,7 +425,9 @@ public class Gerenciar_Funcionarios extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_alterarFuncionario;
     private javax.swing.JButton btn_cadastrarFuncionario;
+    private javax.swing.JButton btn_removerFuncionario;
     private javax.swing.JComboBox<String> cmbBox_cargo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

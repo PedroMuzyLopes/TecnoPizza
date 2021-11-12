@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
 package tecnopizza;
+import Telas.Login;
 
 /**
  *
@@ -14,7 +15,9 @@ public class TecnoPizza {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        Login tela_Login = new Login();
+        
+        tela_Login.setVisible(true);
     }
     
 }

@@ -72,5 +72,68 @@ public class Usuario_BD {
             }
         }
         return listaFuncionarios;
-    } 
+    }
+    
+    // ALTERAR FUNCIONARIOS
+    public boolean atualizarFuncionario(Usuario func) {
+        System.out.println("atualizarFuncionario");
+        // inicia a conexao com o Banco de dados chamando a classe Conexao
+        connection = Conexao.getInstance().getConnection();
+        System.out.println("conectado e preparando para atualizar");
+        Statement stmt = null;
+        try {
+            stmt = connection.createStatement();
+            
+            String sql = "UPDATE usuarios SET nome = '" + func.getNome() + "', email = '" + func.getEmail() + "', senha = '" + func.getSenha() + "', telefone = '" + func.getTelefone()  + "' WHERE email = '" + func.getEmail() + "';";
+            System.out.println("SQL: " + sql);
+            stmt.executeUpdate(sql);
+            // atualizar funcionario na lista que vai ser retornada
+            return true;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return false;
+        } finally {
+            // este bloco finally sempre executa na instrução try para
+            // fechar a conexão a cada conexão aberta
+            try {
+                stmt.close();
+                connection.close();
+            } catch (SQLException e) {
+                System.out.println("Erro ao desconectar" + e.getMessage());
+            }
+        }
+    }
+    
+    // REMOVER FUNCIONARIOS
+    public boolean excluirFuncionario(Usuario func) {
+        System.out.println("excluirFuncionario");
+        // inicia a conexao com o Banco de dados chamando a classe Conexao
+        connection = Conexao.getInstance().getConnection();
+        System.out.println("conectado. Preparando para excluir");
+        Statement stmt = null;
+        try {
+            stmt = connection.createStatement();
+            
+            //System.out.( func.getCpf() );  
+            String sql = "DELETE FROM usuarios WHERE email = '" + func.getEmail() + "';";
+            System.out.println("SQL: " + sql); 
+            stmt.executeUpdate(sql);
+            // Excluindo funcionario no banco de dados atraves do campo CPF
+            return true;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return false;
+        } finally {
+            // este bloco finally sempre executa na instrução try para
+            // fechar a conexão a cada conexão aberta
+            try {
+                stmt.close();
+                connection.close();
+            } catch (SQLException e) {
+                System.out.println("Erro ao desconectar" + e.getMessage());
+            }
+        }
+    }
+    
+    
 }
