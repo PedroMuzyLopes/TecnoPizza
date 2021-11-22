@@ -19,16 +19,36 @@ public class Usuario_BD {
     public boolean cadastrarFuncionario(Usuario Funcionario){
         System.out.println("cadastrarFuncionario");
         // inicia a conexao com o Banco de dados chamando a classe CONEXAO
+        
         connection = Conexao.getInstance().getConnection();
         System.out.println("conectado e preparando para cadastrar funcionário");
         Statement stmt = null;
         try {
-            stmt = connection.createStatement();     
-            String sql = "INSERT into usuarios (nome,email,senha,telefone,cargo) VALUES ('"+Funcionario.getNome()+"','"+Funcionario.getEmail()+"','"+Funcionario.getSenha()+"','"+Funcionario.getTelefone()+"','"+Funcionario.getCargo()+"');";
+            int loop = 1;
+            
+            stmt = connection.createStatement();
+            
+            String sql = "Select * from usuarios where email = '"+Funcionario.getEmail()+"'";
             System.out.println("SQL: " + sql);
-            stmt.executeUpdate(sql);
-            // Incluindo funcionarios na tabela funcionarios que vai ser retornada
-            return true;
+                
+            ResultSet rs = stmt.executeQuery(sql);
+                
+            while (rs.next()){
+                loop = 2;  
+                break;
+            }
+            
+            if (loop == 2) {
+                return false;
+            }
+            else {
+                String sql2 = "INSERT into usuarios (nome,email,senha,telefone,cargo) VALUES ('"+Funcionario.getNome()+"','"+Funcionario.getEmail()+"','"+Funcionario.getSenha()+"','"+Funcionario.getTelefone()+"','"+Funcionario.getCargo()+"');";
+                System.out.println("SQL: " + sql2);
+                stmt.executeUpdate(sql2);
+                // Incluindo funcionarios na tabela funcionarios que vai ser retornada
+                return true;
+            }
+ 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             return false;

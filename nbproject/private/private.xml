@@ -4,9 +4,10 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/D:/Arquivos/Projetos/TecnoPizza/src/Modelo/Usuario.java</file>
-            <file>file:/D:/Arquivos/Projetos/TecnoPizza/src/Controle/Produto_BD.java</file>
-            <file>file:/D:/Arquivos/Projetos/TecnoPizza/src/Telas/Cadastrar_produtos.java</file>
-            <file>file:/D:/Arquivos/Projetos/TecnoPizza/src/Modelo/Produto.java</file>
+            <file>file:/D:/Arquivos/Projetos/TecnoPizza/src/Tabelas/Produtos.java</file>
+            <file>file:/D:/Arquivos/Projetos/TecnoPizza/src/Telas/Gerenciar_Funcionarios.java</file>
+            <file>file:/D:/Arquivos/Projetos/TecnoPizza/src/Telas/Efetuar_Venda.java</file>
+            <file>file:/D:/Arquivos/Projetos/TecnoPizza/src/Modelo/Pizza.java</file>
         </group>
     </open-files>
 </project-private>

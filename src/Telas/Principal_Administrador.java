@@ -19,6 +19,8 @@ import javax.swing.ImageIcon;
 public class Principal_Administrador extends javax.swing.JFrame {
   
     Gerenciar_Funcionarios Tela_GerenciarFuncionarios = new Gerenciar_Funcionarios();
+    Cadastrar_Produtos Tela_CadastrarProdutos = new Cadastrar_Produtos();
+    Consultar_Produtos Tela_ConsultarProdutos = new Consultar_Produtos();
     
     public Principal_Administrador() {
         initComponents();
@@ -37,6 +39,8 @@ public class Principal_Administrador extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         btn_CadastrarUsuario = new javax.swing.JButton();
+        btn_CadastrarProduto = new javax.swing.JButton();
+        btn_ConsultarProduto = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -66,11 +70,31 @@ public class Principal_Administrador extends javax.swing.JFrame {
 
         btn_CadastrarUsuario.setBackground(new java.awt.Color(0, 153, 0));
         btn_CadastrarUsuario.setFont(new java.awt.Font("Arial Black", 0, 14)); // NOI18N
-        btn_CadastrarUsuario.setText("CADASTRAR NOVO USUÁRIO");
+        btn_CadastrarUsuario.setText("GERENCIAR USUÁRIOS");
         btn_CadastrarUsuario.setBorderPainted(false);
         btn_CadastrarUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_CadastrarUsuarioActionPerformed(evt);
+            }
+        });
+
+        btn_CadastrarProduto.setBackground(new java.awt.Color(0, 153, 0));
+        btn_CadastrarProduto.setFont(new java.awt.Font("Arial Black", 0, 14)); // NOI18N
+        btn_CadastrarProduto.setText("CADASTRAR PRODUTOS");
+        btn_CadastrarProduto.setBorderPainted(false);
+        btn_CadastrarProduto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_CadastrarProdutoActionPerformed(evt);
+            }
+        });
+
+        btn_ConsultarProduto.setBackground(new java.awt.Color(0, 153, 0));
+        btn_ConsultarProduto.setFont(new java.awt.Font("Arial Black", 0, 14)); // NOI18N
+        btn_ConsultarProduto.setText("CONSULTAR PRODUTOS");
+        btn_ConsultarProduto.setBorderPainted(false);
+        btn_ConsultarProduto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_ConsultarProdutoActionPerformed(evt);
             }
         });
 
@@ -81,7 +105,10 @@ public class Principal_Administrador extends javax.swing.JFrame {
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btn_CadastrarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btn_ConsultarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_CadastrarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_CadastrarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(244, 244, 244))
         );
         jPanel1Layout.setVerticalGroup(
@@ -91,7 +118,11 @@ public class Principal_Administrador extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(126, 126, 126)
                 .addComponent(btn_CadastrarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(350, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btn_CadastrarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btn_ConsultarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(238, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -105,7 +136,8 @@ public class Principal_Administrador extends javax.swing.JFrame {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        pack();
+        setSize(new java.awt.Dimension(816, 639));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_CadastrarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_CadastrarUsuarioActionPerformed
@@ -113,6 +145,16 @@ public class Principal_Administrador extends javax.swing.JFrame {
         this.dispose();// faz com que a tela de login desapareÃƒÂ§a apÃƒÂ³s abrir tela principal 
            
     }//GEN-LAST:event_btn_CadastrarUsuarioActionPerformed
+
+    private void btn_CadastrarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_CadastrarProdutoActionPerformed
+        Tela_CadastrarProdutos.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btn_CadastrarProdutoActionPerformed
+
+    private void btn_ConsultarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ConsultarProdutoActionPerformed
+        Tela_ConsultarProdutos.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btn_ConsultarProdutoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -153,7 +195,9 @@ public class Principal_Administrador extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_CadastrarProduto;
     private javax.swing.JButton btn_CadastrarUsuario;
+    private javax.swing.JButton btn_ConsultarProduto;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

@@ -40,4 +40,63 @@ public class Produto_BD {
         }
     }
     
+    public ArrayList<Produto> getListaProduto() {
+        ArrayList<Produto> listaProduto = new ArrayList<Produto>();
+      
+        connection = Conexao.getInstance().getConnection();
+        System.out.println("conectado e preparando listagem");
+        Statement stmt = null;
+        try {
+            stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM produtos ORDER BY nome");
+            // Incluindo produtos na listadeprodutos que vai ser retornada
+            while (rs.next()) {
+                Produto prod = new Produto(rs.getString("nome"), rs.getString("marca"), rs.getString("fornecedor"), rs.getString("validade"), rs.getString("codbarras"), rs.getInt("quantidade"));
+                listaProduto.add(prod);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return null;
+        } finally {
+          
+            try {
+                stmt.close();
+                connection.close();
+            } catch (SQLException e) {
+                System.out.println("Erro ao desconectar" + e.getMessage());
+            }
+        }
+        return listaProduto;
+    } // final do metodo
+    
+    public ArrayList<Produto> ListaProdutoNome(String busca) {
+        ArrayList<Produto> listaProduto = new ArrayList<Produto>();
+      
+        connection = Conexao.getInstance().getConnection();
+        System.out.println("conectado e preparando listagem");
+        Statement stmt = null;
+        try {
+            stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM produtos WHERE nome LIKE '%"+busca+"%'");
+            // Incluindo produtos na listadeprodutos que vai ser retornada
+                        
+            while (rs.next()) {
+                Produto prod = new Produto(rs.getString("nome"), rs.getString("marca"), rs.getString("fornecedor"), rs.getString("validade"), rs.getString("codbarras"), rs.getInt("quantidade"));
+                listaProduto.add(prod);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return null;
+        } finally {
+          
+            try {
+                stmt.close();
+                connection.close();
+            } catch (SQLException e) {
+                System.out.println("Erro ao desconectar" + e.getMessage());
+            }
+        }
+        return listaProduto;
+    } // final do metodo
+    
 }
