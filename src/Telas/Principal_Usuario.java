@@ -11,6 +11,8 @@ package Telas;
 public class Principal_Usuario extends javax.swing.JFrame {
     Cadastrar_Produtos Tela_CadastrarProdutos = new Cadastrar_Produtos();
     Consultar_Produtos Tela_ConsultarProdutos = new Consultar_Produtos();
+    Cadastrar_Pizza Tela_Add_Pizzas = new Cadastrar_Pizza();
+    Efetuar_Venda Tela_Vendas = new Efetuar_Venda();
     /**
      * Creates new form Principal_Usuario
      */
@@ -36,8 +38,8 @@ public class Principal_Usuario extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        btn_CadastrarProduto1 = new javax.swing.JButton();
         btn_ConsultarProduto = new javax.swing.JButton();
+        btn_EfetuarVenda = new javax.swing.JButton();
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 0));
 
@@ -136,16 +138,6 @@ public class Principal_Usuario extends javax.swing.JFrame {
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
-        btn_CadastrarProduto1.setBackground(new java.awt.Color(0, 153, 0));
-        btn_CadastrarProduto1.setFont(new java.awt.Font("Arial Black", 0, 14)); // NOI18N
-        btn_CadastrarProduto1.setText("CADASTRAR PRODUTOS");
-        btn_CadastrarProduto1.setBorderPainted(false);
-        btn_CadastrarProduto1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_CadastrarProduto1ActionPerformed(evt);
-            }
-        });
-
         btn_ConsultarProduto.setBackground(new java.awt.Color(0, 153, 0));
         btn_ConsultarProduto.setFont(new java.awt.Font("Arial Black", 0, 14)); // NOI18N
         btn_ConsultarProduto.setText("CONSULTAR PRODUTOS");
@@ -156,16 +148,26 @@ public class Principal_Usuario extends javax.swing.JFrame {
             }
         });
 
+        btn_EfetuarVenda.setBackground(new java.awt.Color(0, 153, 0));
+        btn_EfetuarVenda.setFont(new java.awt.Font("Arial Black", 0, 14)); // NOI18N
+        btn_EfetuarVenda.setText("EFETUAR VENDA");
+        btn_EfetuarVenda.setBorderPainted(false);
+        btn_EfetuarVenda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_EfetuarVendaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(257, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btn_ConsultarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_CadastrarProduto1, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_EfetuarVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_ConsultarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(244, 244, 244))
         );
         jPanel3Layout.setVerticalGroup(
@@ -173,11 +175,11 @@ public class Principal_Usuario extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(182, 182, 182)
-                .addComponent(btn_CadastrarProduto1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(169, 169, 169)
                 .addComponent(btn_ConsultarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(238, Short.MAX_VALUE))
+                .addGap(49, 49, 49)
+                .addComponent(btn_EfetuarVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(220, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -215,14 +217,15 @@ public class Principal_Usuario extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btn_CadastrarProdutoActionPerformed
 
-    private void btn_CadastrarProduto1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_CadastrarProduto1ActionPerformed
-      
-    }//GEN-LAST:event_btn_CadastrarProduto1ActionPerformed
-
     private void btn_ConsultarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ConsultarProdutoActionPerformed
         Tela_ConsultarProdutos.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btn_ConsultarProdutoActionPerformed
+
+    private void btn_EfetuarVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_EfetuarVendaActionPerformed
+        Tela_Vendas.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btn_EfetuarVendaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -261,9 +264,9 @@ public class Principal_Usuario extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_CadastrarProduto;
-    private javax.swing.JButton btn_CadastrarProduto1;
     private javax.swing.JButton btn_CadastrarUsuario;
     private javax.swing.JButton btn_ConsultarProduto;
+    private javax.swing.JButton btn_EfetuarVenda;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

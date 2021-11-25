@@ -29,8 +29,13 @@ import javax.swing.table.DefaultTableModel;
  */
 
 public class Efetuar_Venda extends javax.swing.JFrame {
-  
+    Connection connection = null;
     float total = 0,valor;
+    String nome_pizza, ingredientes_pizza;
+    
+    int quantidade_certa, quantidade_nova, quantidade_bd;
+    
+    Produto_BD produto = new Produto_BD();
     
     Pizza_BD lista_busca = new Pizza_BD();
     public ArrayList<Pizza> lista_selecionado;
@@ -53,10 +58,11 @@ public class Efetuar_Venda extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        btn_cadastrarFuncionario = new javax.swing.JButton();
+        btn_Voltar = new javax.swing.JButton();
+        btn_concluirVenda = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_Cardapio = new javax.swing.JTable();
-        btn_removerFuncionario = new javax.swing.JButton();
+        btn_Limpar = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -64,6 +70,8 @@ public class Efetuar_Venda extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         txtBox_Total = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -74,12 +82,23 @@ public class Efetuar_Venda extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Arial Black", 0, 24)); // NOI18N
         jLabel1.setText("TECNO-PIZZA");
 
+        btn_Voltar.setBackground(new java.awt.Color(0, 204, 51));
+        btn_Voltar.setText("⬅️ Voltar");
+        btn_Voltar.setBorderPainted(false);
+        btn_Voltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_VoltarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(btn_Voltar, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addContainerGap())
         );
@@ -89,15 +108,19 @@ public class Efetuar_Venda extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addComponent(jLabel1)
                 .addContainerGap(20, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btn_Voltar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
-        btn_cadastrarFuncionario.setBackground(new java.awt.Color(0, 153, 0));
-        btn_cadastrarFuncionario.setFont(new java.awt.Font("Arial Black", 0, 14)); // NOI18N
-        btn_cadastrarFuncionario.setText("CONCLUIR VENDA");
-        btn_cadastrarFuncionario.setBorderPainted(false);
-        btn_cadastrarFuncionario.addActionListener(new java.awt.event.ActionListener() {
+        btn_concluirVenda.setBackground(new java.awt.Color(0, 153, 0));
+        btn_concluirVenda.setFont(new java.awt.Font("Arial Black", 0, 14)); // NOI18N
+        btn_concluirVenda.setText("CONCLUIR VENDA");
+        btn_concluirVenda.setBorderPainted(false);
+        btn_concluirVenda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_cadastrarFuncionarioActionPerformed(evt);
+                btn_concluirVendaActionPerformed(evt);
             }
         });
 
@@ -144,14 +167,14 @@ public class Efetuar_Venda extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tbl_Cardapio);
 
-        btn_removerFuncionario.setBackground(new java.awt.Color(102, 102, 102));
-        btn_removerFuncionario.setFont(new java.awt.Font("Arial Black", 0, 14)); // NOI18N
-        btn_removerFuncionario.setForeground(new java.awt.Color(255, 255, 255));
-        btn_removerFuncionario.setText("LIMPAR");
-        btn_removerFuncionario.setBorderPainted(false);
-        btn_removerFuncionario.addActionListener(new java.awt.event.ActionListener() {
+        btn_Limpar.setBackground(new java.awt.Color(102, 102, 102));
+        btn_Limpar.setFont(new java.awt.Font("Arial Black", 0, 14)); // NOI18N
+        btn_Limpar.setForeground(new java.awt.Color(255, 255, 255));
+        btn_Limpar.setText("LIMPAR");
+        btn_Limpar.setBorderPainted(false);
+        btn_Limpar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_removerFuncionarioActionPerformed(evt);
+                btn_LimparActionPerformed(evt);
             }
         });
 
@@ -198,46 +221,54 @@ public class Efetuar_Venda extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(tbl_Carrinho);
 
-        jLabel5.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Cardápio:");
+        jLabel5.setText("Carrinho");
 
         jLabel7.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("Carrinho:");
+        jLabel7.setText("dê dois cliques para remover uma pizza do carrinho");
+
+        jLabel8.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setText("dê dois cliques para adicionar uma pizza ao carrinho");
+
+        jLabel9.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setText("Cardápio");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addGap(39, 39, 39))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                                .addGap(27, 27, 27))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGap(12, 12, 12))
+                        .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 427, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtBox_Total, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 306, Short.MAX_VALUE)))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(btn_cadastrarFuncionario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_removerFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
+                                .addComponent(txtBox_Total, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel9))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                            .addComponent(btn_concluirVenda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btn_Limpar, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 347, Short.MAX_VALUE)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -245,13 +276,17 @@ public class Efetuar_Venda extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(68, 68, 68)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGap(46, 46, 46)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jLabel7))
+                    .addComponent(jLabel9))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel8))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 304, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -264,8 +299,8 @@ public class Efetuar_Venda extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(44, 44, 44)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btn_removerFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btn_cadastrarFuncionario, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(btn_Limpar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn_concluirVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(33, 33, 33))
         );
 
@@ -306,48 +341,8 @@ public class Efetuar_Venda extends javax.swing.JFrame {
         return listaPizzas;
     }
     
-    //Zera os campos do formulario
-    private void limpaCampos(){
-        
-        //lista.clear();
-    }
-    
-    private void inicializaCampos_tabela() {
-        getDataTabelaCardapio();
-        limpaCampos();
-    }
-    
-    
-    
-    private void btn_cadastrarFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cadastrarFuncionarioActionPerformed
-        System.out.println("FOOI");
-        
-    }//GEN-LAST:event_btn_cadastrarFuncionarioActionPerformed
-
-    private void tbl_CardapioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_CardapioMouseClicked
-       tbl_Cardapio.getValueAt(tbl_Cardapio.getSelectedRow(), 0);
-       DefaultTableModel model_carrinho=(DefaultTableModel)tbl_Carrinho.getModel();
-       
-       Object[] pizzas_selecionadas = {tbl_Cardapio.getValueAt(tbl_Cardapio.getSelectedRow(), 0), 1, tbl_Cardapio.getValueAt(tbl_Cardapio.getSelectedRow(), 2)};
-       
-       model_carrinho.addRow(pizzas_selecionadas);
-       
-       //valor = (int)tbl_Cardapio.getValueAt(tbl_Cardapio.getSelectedRow(), 2) * (float)tbl_Cardapio.getValueAt(tbl_Cardapio.getSelectedRow(), 2);
-       
-      
-       
-    }//GEN-LAST:event_tbl_CardapioMouseClicked
-
-    private void btn_removerFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_removerFuncionarioActionPerformed
-        limpaCampos();
-    }//GEN-LAST:event_btn_removerFuncionarioActionPerformed
-
-    private void tbl_CarrinhoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_CarrinhoMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tbl_CarrinhoMouseClicked
-
-    private void tbl_CarrinhoPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tbl_CarrinhoPropertyChange
-        // TODO add your handling code here:
+    //Atualiza valor total
+    private void atualizaTotal() {
        total = 0;
        for (int i = 0; i < tbl_Carrinho.getRowCount(); i++) {
            System.out.println("Qtd: "+(int)tbl_Carrinho.getValueAt(i , 1));
@@ -359,7 +354,173 @@ public class Efetuar_Venda extends javax.swing.JFrame {
        }
 
        txtBox_Total.setText(Float.toString(total));
+    }
+    
+    //Zera os campos do formulario
+    private void limpaCampos(){
+        
+       Efetuar_Venda Tela_limpa = new Efetuar_Venda();
+        Tela_limpa.setVisible(true);
+        this.dispose();
+       
+    }
+    
+    private void inicializaCampos_tabela() {
+        getDataTabelaCardapio();
+        
+    }
+    
+    
+    
+    private void btn_concluirVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_concluirVendaActionPerformed
+       
+        
+       for (int i = 0; i < tbl_Carrinho.getRowCount(); i++) {                
+            
+            Connection con = null;
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                con = DriverManager.getConnection("jdbc:mysql://localhost/tecno_pizza", "root", "");
+                java.sql.Statement stm = con.createStatement();
+                String SQL = "Select * from pizzas where nome = '"+tbl_Carrinho.getValueAt(i , 0).toString()+"';";
+                
+                ResultSet rs = stm.executeQuery(SQL);
+                
+                
+                while (rs.next()){
+                    ingredientes_pizza = rs.getString("ingredientes");
+                }
+                     
+            }catch(SQLException e){
+                e.printStackTrace(); //vejamos que erro foi gerado e quem o gerou
+                JOptionPane.showMessageDialog(null,"Erro na conexÃ£o, com o banco de dados!","Oi. Simples assim!",JOptionPane.WARNING_MESSAGE);
+            }catch (ClassNotFoundException e) 
+            {
+                e.printStackTrace();
+            }
+            finally
+            {
+                try{
+                    con.close();
+                }catch(SQLException onConClose){
+                    //System.out.println("Houve erro no fechamento da conexÃ£o");
+                    JOptionPane.showMessageDialog(null,"Erro na conexÃ£o, com o banco de dados!","Oi. Simples assim!",JOptionPane.WARNING_MESSAGE);
+                    onConClose.printStackTrace();
+                }
+               
+              String[] listaIngredientes = ingredientes_pizza.split(",");
+              
+              int tam_Ingredientes = listaIngredientes.length;
+              
+              for (int f = 0; f < tam_Ingredientes; f++) {
+                  quantidade_nova = 0;
+                  quantidade_certa = 0;
+                  //System.out.println("Posicao "+f+ ": "+ listaIngredientes[f]);
+           
+                  
+                  // inicia a conexao com o Banco de dados chamando a classe Conexao
+                   connection = Conexao.getInstance().getConnection();
+                    //System.out.println("conectado e preparando para atualizar");
+        
+                    Statement stmt = null;
+                    
+                    try {
+                        stmt = connection.createStatement();
+
+                        String SQL = "Select * from produtos where nome = '"+listaIngredientes[f]+"';";
+
+                        ResultSet res_prod = stmt.executeQuery(SQL);
+                
+                
+                        while (res_prod.next()){
+                            quantidade_certa = res_prod.getInt("quantidade");
+                        }
+                
+                        quantidade_nova = quantidade_certa - (int)tbl_Carrinho.getValueAt(i , 1);
+
+                        System.out.println("Posicao "+f+ ": "+ listaIngredientes[f] + ", quantidade: "+quantidade_nova);
+
+                        if (quantidade_nova < 0) {
+                            JOptionPane.showMessageDialog(null,"Não temos ingredientes suficientes no estoque para produzirmos essa Pizza","Oi. Simples assim!",JOptionPane.WARNING_MESSAGE);
+                            break;
+                        } else {
+
+                            String sql = "UPDATE produtos SET quantidade = '" + quantidade_nova + "' where nome = '"+listaIngredientes[f]+"'";
+                            System.out.println("SQL: " + sql);
+                            stmt.executeUpdate(sql);
+                        }
+                        
+                    } catch (SQLException e) {
+                        System.out.println(e.getMessage());
+                      } finally {
+                        // este bloco finally sempre executa na instrução try para
+                        // fechar a conexão a cada conexão aberta
+                        try {
+                            stmt.close();
+                            connection.close();
+                        } catch (SQLException e) {
+                            System.out.println("Erro ao desconectar" + e.getMessage());
+                        }
+                       }
+     
+              }
+
+           //System.out.println("Ingredientes: "+tbl_Carrinho.getValueAt(i , 0));
+           
+           //lista_busca.ListaPizzaNome((String)tbl_Carrinho.getValueAt(i , 0));
+           //ArrayList<Pizza> listaPizzas = new ArrayList<Pizza>();
+           //listaPizzas = new Pizza_BD().ListaPizzaNome((String)tbl_Carrinho.getValueAt(i , 0));
+           
+           //System.out.println("Array pelo nome: "+listaPizzas);
+           
+           /*
+           System.out.println("valor: "+(float)tbl_Carrinho.getValueAt(i, 2));
+           valor = (int)tbl_Carrinho.getValueAt(i , 1) * (float)tbl_Carrinho.getValueAt(i, 2);
+           System.out.println("Valor: "+valor);
+           total=total+valor;
+           System.out.println("Total: "+valor);
+           */
+       }
+         
+       }
+        
+    }//GEN-LAST:event_btn_concluirVendaActionPerformed
+
+    private void tbl_CardapioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_CardapioMouseClicked
+        if (evt.getClickCount()==2){
+            tbl_Cardapio.getValueAt(tbl_Cardapio.getSelectedRow(), 0);
+            DefaultTableModel model_carrinho=(DefaultTableModel)tbl_Carrinho.getModel();
+
+            Object[] pizzas_selecionadas = {tbl_Cardapio.getValueAt(tbl_Cardapio.getSelectedRow(), 0), 1, tbl_Cardapio.getValueAt(tbl_Cardapio.getSelectedRow(), 2)};
+
+            model_carrinho.addRow(pizzas_selecionadas);
+            atualizaTotal();
+        }
+    }//GEN-LAST:event_tbl_CardapioMouseClicked
+
+    private void btn_LimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_LimparActionPerformed
+        limpaCampos();
+    }//GEN-LAST:event_btn_LimparActionPerformed
+
+    private void tbl_CarrinhoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_CarrinhoMouseClicked
+        if (evt.getClickCount()==2){
+            DefaultTableModel model_carrinho=(DefaultTableModel)tbl_Carrinho.getModel();
+            model_carrinho.removeRow(tbl_Carrinho.getSelectedRow());
+            atualizaTotal();
+        }
+    }//GEN-LAST:event_tbl_CarrinhoMouseClicked
+
+    private void tbl_CarrinhoPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tbl_CarrinhoPropertyChange
+        
+       atualizaTotal();
     }//GEN-LAST:event_tbl_CarrinhoPropertyChange
+
+    private void btn_VoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_VoltarActionPerformed
+        Principal_Administrador Tela_Adm = new Principal_Administrador();
+
+        Tela_Adm.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btn_VoltarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -428,13 +589,16 @@ public class Efetuar_Venda extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_cadastrarFuncionario;
-    private javax.swing.JButton btn_removerFuncionario;
+    private javax.swing.JButton btn_Limpar;
+    private javax.swing.JButton btn_Voltar;
+    private javax.swing.JButton btn_concluirVenda;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;

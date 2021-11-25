@@ -70,20 +70,20 @@ public class Pizza_BD {
         return listaPizza;
     } // final do metodo
     
-    public ArrayList<Produto> ListaProdutoNome(String busca) {
-        ArrayList<Produto> listaProduto = new ArrayList<Produto>();
+    public ArrayList<Pizza> ListaPizzaNome(String nome) {
+        ArrayList<Pizza> listaPizza = new ArrayList<Pizza>();
       
         connection = Conexao.getInstance().getConnection();
         System.out.println("conectado e preparando listagem");
         Statement stmt = null;
         try {
             stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM produtos WHERE nome LIKE '%"+busca+"%'");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM pizzas WHERE nome =  '%"+nome+"%'");
             // Incluindo produtos na listadeprodutos que vai ser retornada
                         
             while (rs.next()) {
-                Produto prod = new Produto(rs.getString("nome"), rs.getString("marca"), rs.getString("fornecedor"), rs.getString("validade"), rs.getString("codbarras"), rs.getInt("quantidade"));
-                listaProduto.add(prod);
+                Pizza pizza = new Pizza(rs.getString("nome"), rs.getString("ingredientes"), rs.getFloat("valor"));
+                listaPizza.add(pizza);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -97,7 +97,7 @@ public class Pizza_BD {
                 System.out.println("Erro ao desconectar" + e.getMessage());
             }
         }
-        return listaProduto;
+        return listaPizza;
     } // final do metodo
     
 }

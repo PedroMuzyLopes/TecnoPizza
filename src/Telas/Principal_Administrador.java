@@ -21,6 +21,8 @@ public class Principal_Administrador extends javax.swing.JFrame {
     Gerenciar_Funcionarios Tela_GerenciarFuncionarios = new Gerenciar_Funcionarios();
     Cadastrar_Produtos Tela_CadastrarProdutos = new Cadastrar_Produtos();
     Consultar_Produtos Tela_ConsultarProdutos = new Consultar_Produtos();
+    Cadastrar_Pizza Tela_Add_Pizzas = new Cadastrar_Pizza();
+    Efetuar_Venda Tela_Vendas = new Efetuar_Venda();
     
     public Principal_Administrador() {
         initComponents();
@@ -40,7 +42,9 @@ public class Principal_Administrador extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         btn_CadastrarUsuario = new javax.swing.JButton();
         btn_CadastrarProduto = new javax.swing.JButton();
-        btn_ConsultarProduto = new javax.swing.JButton();
+        btn_AdicionarPizza = new javax.swing.JButton();
+        btn_EfetuarVenda = new javax.swing.JButton();
+        btn_ConsultarProduto2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -88,13 +92,33 @@ public class Principal_Administrador extends javax.swing.JFrame {
             }
         });
 
-        btn_ConsultarProduto.setBackground(new java.awt.Color(0, 153, 0));
-        btn_ConsultarProduto.setFont(new java.awt.Font("Arial Black", 0, 14)); // NOI18N
-        btn_ConsultarProduto.setText("CONSULTAR PRODUTOS");
-        btn_ConsultarProduto.setBorderPainted(false);
-        btn_ConsultarProduto.addActionListener(new java.awt.event.ActionListener() {
+        btn_AdicionarPizza.setBackground(new java.awt.Color(0, 153, 0));
+        btn_AdicionarPizza.setFont(new java.awt.Font("Arial Black", 0, 14)); // NOI18N
+        btn_AdicionarPizza.setText("ADICIONAR PIZZA");
+        btn_AdicionarPizza.setBorderPainted(false);
+        btn_AdicionarPizza.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_ConsultarProdutoActionPerformed(evt);
+                btn_AdicionarPizzaActionPerformed(evt);
+            }
+        });
+
+        btn_EfetuarVenda.setBackground(new java.awt.Color(0, 153, 0));
+        btn_EfetuarVenda.setFont(new java.awt.Font("Arial Black", 0, 14)); // NOI18N
+        btn_EfetuarVenda.setText("EFETUAR VENDA");
+        btn_EfetuarVenda.setBorderPainted(false);
+        btn_EfetuarVenda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_EfetuarVendaActionPerformed(evt);
+            }
+        });
+
+        btn_ConsultarProduto2.setBackground(new java.awt.Color(0, 153, 0));
+        btn_ConsultarProduto2.setFont(new java.awt.Font("Arial Black", 0, 14)); // NOI18N
+        btn_ConsultarProduto2.setText("CONSULTAR PRODUTOS");
+        btn_ConsultarProduto2.setBorderPainted(false);
+        btn_ConsultarProduto2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_ConsultarProduto2ActionPerformed(evt);
             }
         });
 
@@ -106,7 +130,9 @@ public class Principal_Administrador extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btn_ConsultarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_ConsultarProduto2, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_EfetuarVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_AdicionarPizza, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_CadastrarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_CadastrarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(244, 244, 244))
@@ -121,8 +147,12 @@ public class Principal_Administrador extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(btn_CadastrarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btn_ConsultarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(238, Short.MAX_VALUE))
+                .addComponent(btn_ConsultarProduto2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btn_AdicionarPizza, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btn_EfetuarVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(126, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -151,10 +181,20 @@ public class Principal_Administrador extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btn_CadastrarProdutoActionPerformed
 
-    private void btn_ConsultarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ConsultarProdutoActionPerformed
+    private void btn_AdicionarPizzaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AdicionarPizzaActionPerformed
+        Tela_Add_Pizzas.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btn_AdicionarPizzaActionPerformed
+
+    private void btn_EfetuarVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_EfetuarVendaActionPerformed
+        Tela_Vendas.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btn_EfetuarVendaActionPerformed
+
+    private void btn_ConsultarProduto2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ConsultarProduto2ActionPerformed
         Tela_ConsultarProdutos.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_btn_ConsultarProdutoActionPerformed
+    }//GEN-LAST:event_btn_ConsultarProduto2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -195,9 +235,11 @@ public class Principal_Administrador extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_AdicionarPizza;
     private javax.swing.JButton btn_CadastrarProduto;
     private javax.swing.JButton btn_CadastrarUsuario;
-    private javax.swing.JButton btn_ConsultarProduto;
+    private javax.swing.JButton btn_ConsultarProduto2;
+    private javax.swing.JButton btn_EfetuarVenda;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

@@ -99,4 +99,60 @@ public class Produto_BD {
         return listaProduto;
     } // final do metodo
     
+    public boolean atualizarQtd(String nome, int quantidade) {
+        
+        quantidade_certa = 0;
+        quantidade_nova = 0;
+        quantidade = 0;
+        
+        System.out.println("atualizar Quantidade");
+        // inicia a conexao com o Banco de dados chamando a classe Conexao
+        connection = Conexao.getInstance().getConnection();
+        System.out.println("conectado e preparando para atualizar");
+        
+        Statement stmt = null;
+        
+        
+        try {
+            stmt = connection.createStatement();
+            
+            String SQL = "Select * from produtos where nome = '"+nome+"';";
+                
+                ResultSet res_prod = stmt.executeQuery(SQL);
+                
+                
+                while (res_prod.next()){
+                    quantidade_certa = res_prod.getInt("quantidade");
+                }
+                
+                quantidade_nova = quantidade_certa - quantidade;
+                
+                
+                if (quantidade_nova < 0) {
+                    return false;
+                } else {
+            
+            String sql = "UPDATE produtos SET quantidade = '" + quantidade_nova + "' where nome = '"+nome+"';";
+            System.out.println("SQL: " + sql);
+            stmt.executeUpdate(sql);
+            // atualizar funcionario na lista que vai ser retornada
+            return true;
+                }
+            
+            
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return false;
+        } finally {
+            // este bloco finally sempre executa na instrução try para
+            // fechar a conexão a cada conexão aberta
+            try {
+                stmt.close();
+                connection.close();
+            } catch (SQLException e) {
+                System.out.println("Erro ao desconectar" + e.getMessage());
+            }
+        }
+    }
+    
 }
