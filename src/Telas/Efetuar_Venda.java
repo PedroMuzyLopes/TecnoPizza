@@ -5,14 +5,14 @@
 package Telas;
 
 import Controle.Conexao;
-import Controle.Usuario_BD;
 import Controle.Produto_BD;
 import Controle.Pizza_BD;
 import Controle.Venda_BD;
-import Modelo.Usuario;
 import Modelo.Pizza;
 import Modelo.Produto;
 import Modelo.Venda;
+
+import java.util.Date;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -33,11 +33,18 @@ public class Efetuar_Venda extends javax.swing.JFrame {
     float total = 0,valor;
     String nome_pizza, ingredientes_pizza;
     
+    boolean vendaConcluida;
+    
     int quantidade_certa, quantidade_nova, quantidade_bd;
     
     Produto_BD produto = new Produto_BD();
     
     Pizza_BD lista_busca = new Pizza_BD();
+    
+    Venda_BD venda = new Venda_BD();
+    
+
+    
     public ArrayList<Pizza> lista_selecionado;
     
     public Efetuar_Venda() {
@@ -318,12 +325,26 @@ public class Efetuar_Venda extends javax.swing.JFrame {
         setSize(new java.awt.Dimension(816, 639));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-    
+
     //Formulario
     private Pizza getDados_Pizza() {
         Pizza getDadosPizza = new Pizza();
         
         return getDadosPizza;
+    }
+    
+    private Venda getDados_Venda(int i) {
+        Venda getDadosVenda = new Venda();
+        getDadosVenda.setNome_produto(tbl_Carrinho.getValueAt(i , 0).toString());
+        getDadosVenda.setQuantidade((int)tbl_Carrinho.getValueAt(i , 1));
+        float val_total_venda = (int)tbl_Carrinho.getValueAt(i , 1) * (float)tbl_Carrinho.getValueAt(i , 2);
+        getDadosVenda.setValor(val_total_venda);
+        
+        Date data = new Date();
+        
+        getDadosVenda.setData(data.toString());
+
+        return getDadosVenda;
     }
     
     //Tabela
@@ -358,8 +379,7 @@ public class Efetuar_Venda extends javax.swing.JFrame {
     
     //Zera os campos do formulario
     private void limpaCampos(){
-        
-       Efetuar_Venda Tela_limpa = new Efetuar_Venda();
+        Efetuar_Venda Tela_limpa = new Efetuar_Venda();
         Tela_limpa.setVisible(true);
         this.dispose();
        
@@ -375,7 +395,9 @@ public class Efetuar_Venda extends javax.swing.JFrame {
     private void btn_concluirVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_concluirVendaActionPerformed
        
         
-       for (int i = 0; i < tbl_Carrinho.getRowCount(); i++) {                
+       for (int i = 0; i < tbl_Carrinho.getRowCount(); i++) {
+           
+           venda.inserirVenda(getDados_Venda(i));
             
             Connection con = null;
             try {
@@ -442,12 +464,14 @@ public class Efetuar_Venda extends javax.swing.JFrame {
 
                         if (quantidade_nova < 0) {
                             JOptionPane.showMessageDialog(null,"Não temos ingredientes suficientes no estoque para produzirmos essa Pizza","Oi. Simples assim!",JOptionPane.WARNING_MESSAGE);
+                            vendaConcluida = false;
                             break;
                         } else {
 
                             String sql = "UPDATE produtos SET quantidade = '" + quantidade_nova + "' where nome = '"+listaIngredientes[f]+"'";
                             System.out.println("SQL: " + sql);
                             stmt.executeUpdate(sql);
+                            vendaConcluida = true;
                         }
                         
                     } catch (SQLException e) {
@@ -457,7 +481,8 @@ public class Efetuar_Venda extends javax.swing.JFrame {
                         // fechar a conexão a cada conexão aberta
                         try {
                             stmt.close();
-                            connection.close();
+                            connection.close();                         
+
                         } catch (SQLException e) {
                             System.out.println("Erro ao desconectar" + e.getMessage());
                         }
@@ -465,27 +490,18 @@ public class Efetuar_Venda extends javax.swing.JFrame {
      
               }
 
-           //System.out.println("Ingredientes: "+tbl_Carrinho.getValueAt(i , 0));
-           
-           //lista_busca.ListaPizzaNome((String)tbl_Carrinho.getValueAt(i , 0));
-           //ArrayList<Pizza> listaPizzas = new ArrayList<Pizza>();
-           //listaPizzas = new Pizza_BD().ListaPizzaNome((String)tbl_Carrinho.getValueAt(i , 0));
-           
-           //System.out.println("Array pelo nome: "+listaPizzas);
-           
-           /*
-           System.out.println("valor: "+(float)tbl_Carrinho.getValueAt(i, 2));
-           valor = (int)tbl_Carrinho.getValueAt(i , 1) * (float)tbl_Carrinho.getValueAt(i, 2);
-           System.out.println("Valor: "+valor);
-           total=total+valor;
-           System.out.println("Total: "+valor);
-           */
        }
          
+       }
+       
+       if (vendaConcluida == true) {
+            JOptionPane.showMessageDialog(null,"Venda realizada com sucesso!","SUCESSO!",JOptionPane.WARNING_MESSAGE);
+            limpaCampos();
        }
         
     }//GEN-LAST:event_btn_concluirVendaActionPerformed
 
+    
     private void tbl_CardapioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_CardapioMouseClicked
         if (evt.getClickCount()==2){
             tbl_Cardapio.getValueAt(tbl_Cardapio.getSelectedRow(), 0);

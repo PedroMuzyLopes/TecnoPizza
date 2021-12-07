@@ -4,12 +4,14 @@
  */
 package Telas;
 
+import Controle.Conexao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
+
 
 /**
  *
@@ -43,8 +45,8 @@ public class Principal_Administrador extends javax.swing.JFrame {
         btn_CadastrarUsuario = new javax.swing.JButton();
         btn_CadastrarProduto = new javax.swing.JButton();
         btn_AdicionarPizza = new javax.swing.JButton();
-        btn_EfetuarVenda = new javax.swing.JButton();
         btn_ConsultarProduto2 = new javax.swing.JButton();
+        btn_EfetuarVenda1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -102,16 +104,6 @@ public class Principal_Administrador extends javax.swing.JFrame {
             }
         });
 
-        btn_EfetuarVenda.setBackground(new java.awt.Color(0, 153, 0));
-        btn_EfetuarVenda.setFont(new java.awt.Font("Arial Black", 0, 14)); // NOI18N
-        btn_EfetuarVenda.setText("EFETUAR VENDA");
-        btn_EfetuarVenda.setBorderPainted(false);
-        btn_EfetuarVenda.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_EfetuarVendaActionPerformed(evt);
-            }
-        });
-
         btn_ConsultarProduto2.setBackground(new java.awt.Color(0, 153, 0));
         btn_ConsultarProduto2.setFont(new java.awt.Font("Arial Black", 0, 14)); // NOI18N
         btn_ConsultarProduto2.setText("CONSULTAR PRODUTOS");
@@ -122,27 +114,37 @@ public class Principal_Administrador extends javax.swing.JFrame {
             }
         });
 
+        btn_EfetuarVenda1.setBackground(new java.awt.Color(0, 153, 0));
+        btn_EfetuarVenda1.setFont(new java.awt.Font("Arial Black", 0, 14)); // NOI18N
+        btn_EfetuarVenda1.setText("EFETUAR VENDA");
+        btn_EfetuarVenda1.setBorderPainted(false);
+        btn_EfetuarVenda1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_EfetuarVenda1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(246, 246, 246)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btn_EfetuarVenda1, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_ConsultarProduto2, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_EfetuarVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_AdicionarPizza, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_CadastrarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_CadastrarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(244, 244, 244))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(126, 126, 126)
+                .addGap(84, 84, 84)
                 .addComponent(btn_CadastrarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btn_CadastrarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -151,8 +153,8 @@ public class Principal_Administrador extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(btn_AdicionarPizza, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btn_EfetuarVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(126, Short.MAX_VALUE))
+                .addComponent(btn_EfetuarVenda1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(168, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -186,15 +188,15 @@ public class Principal_Administrador extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btn_AdicionarPizzaActionPerformed
 
-    private void btn_EfetuarVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_EfetuarVendaActionPerformed
-        Tela_Vendas.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btn_EfetuarVendaActionPerformed
-
     private void btn_ConsultarProduto2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ConsultarProduto2ActionPerformed
         Tela_ConsultarProdutos.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btn_ConsultarProduto2ActionPerformed
+
+    private void btn_EfetuarVenda1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_EfetuarVenda1ActionPerformed
+        Tela_Vendas.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btn_EfetuarVenda1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -239,7 +241,7 @@ public class Principal_Administrador extends javax.swing.JFrame {
     private javax.swing.JButton btn_CadastrarProduto;
     private javax.swing.JButton btn_CadastrarUsuario;
     private javax.swing.JButton btn_ConsultarProduto2;
-    private javax.swing.JButton btn_EfetuarVenda;
+    private javax.swing.JButton btn_EfetuarVenda1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
